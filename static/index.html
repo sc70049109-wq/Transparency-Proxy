@@ -1,18 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Transparency Proxy</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transparency Proxy</title>
+  <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="glass">
-            <h1>Welcome to Transparency Proxy</h1>
-            <p>Click below to open your cloud Firefox browser</p>
-            <a id="enter-proxy-btn" class="btn-glass glass">Enter Transparency Proxy</a>
+  <div class="container">
+    <!-- Card: Cloud Firefox Browser -->
+    <div class="glass">
+      <div class="card-header">
+        <div class="icon glass">🌐</div>
+        <div>
+          <h3 class="card-title">Cloud Firefox</h3>
+          <p class="card-subtitle">Click below to open your cloud Firefox browser</p>
         </div>
+      </div>
+      <a href="#" id="enter-proxy-btn" class="btn-glass glass">Enter Proxy</a>
     </div>
-    <script src="script.js"></script>
+
+    <!-- Other example cards -->
+    <div class="glass">
+      <div class="card-header">
+        <div class="icon glass">🎵</div>
+        <div>
+          <h3 class="card-title">Today's Hits</h3>
+          <p class="card-subtitle">Apple Music Hits</p>
+        </div>
+      </div>
+      <div class="music-widget glass">
+        <div class="album-cover">♪</div>
+        <div style="flex: 1">
+          <div style="color: white; font-weight: 500">Current Song</div>
+          <div style="color: rgba(255, 255, 255, 0.7); font-size: 14px">Artist Name</div>
+        </div>
+        <button class="play-btn">▶</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/script.js"></script>
 </body>
 </html>
