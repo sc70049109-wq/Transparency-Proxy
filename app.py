@@ -1,4 +1,4 @@
-from flask import Flask, redirect
+from flask import Flask, render_template, redirect
 import subprocess
 
 app = Flask(__name__)
@@ -15,14 +15,7 @@ def container_running(name):
 
 @app.route("/")
 def home():
-    return """
-    <html>
-    <head><title>Transparency Proxy</title></head>
-    <body style="display:flex; justify-content:center; align-items:center; height:100vh;">
-        <a href="/open" style="padding:1rem 2rem; background:rgba(255,255,255,0.2); color:white; border-radius:1rem; text-decoration:none; font-size:1.2rem;">Enter Transparency Proxy</a>
-    </body>
-    </html>
-    """
+    return render_template("index.html")
 
 @app.route("/open")
 def open_proxy():
@@ -38,6 +31,6 @@ def open_proxy():
             CHROMIUM_IMAGE
         ])
     return redirect(f"http://localhost:{CHROMIUM_PORT}/")
-    
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)
