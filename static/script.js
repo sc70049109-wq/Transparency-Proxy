@@ -1,3 +1,3 @@
-document.getElementById("enter-btn").addEventListener("click", () => {
-    window.location.href = "/proxy.html";
-});
+document.getElementById("enter").onclick = () => {
+    window.location.href = "/open";
+};
