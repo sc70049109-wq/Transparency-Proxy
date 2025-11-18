@@ -1,18 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Transparency Proxy</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="landing">
-    <h1>Transparency Proxy</h1>
-    <p>Click below to open your cloud Chromium browser</p>
-    <a class="btn-glass" href="/open">Enter Transparency Proxy</a>
+  <div class="container">
+    <div class="glass">
+      <div class="card-header">
+        <div class="icon glass">🦊</div>
+        <div>
+          <h3 class="card-title">Your Cloud Firefox Browser</h3>
+          <p class="card-subtitle">Click below to open your cloud Firefox browser</p>
+        </div>
+      </div>
+      <a href="/proxy" class="btn-glass glass">Enter Transparency Proxy</a>
+    </div>
+
+    <!-- Example iOS 26 Cards -->
+    <div class="glass">
+      <div class="card-header">
+        <div class="icon glass">🎵</div>
+        <div>
+          <h3 class="card-title">Music Player</h3>
+          <p class="card-subtitle">Current Song Info</p>
+        </div>
+      </div>
+      <div class="music-widget glass">
+        <div class="album-cover">♪</div>
+        <div style="flex: 1">
+          <div style="color: white; font-weight: 500">Song Title</div>
+          <div style="color: rgba(255,255,255,0.7); font-size: 14px">Artist</div>
+        </div>
+        <button class="play-btn">▶</button>
+      </div>
+    </div>
   </div>
 
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script src="script.js"></script>
 </body>
 </html>
