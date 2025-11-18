@@ -1,49 +1,35 @@
-from flask import Flask, send_from_directory, redirect, request
+from flask import Flask, redirect
 import docker
-import random
-import os
 
-app = Flask(__name__, static_folder="static")
+app = Flask(__name__)
 client = docker.from_env()
 
+# Docker configuration
 FIREFOX_IMAGE = "jlesage/firefox:latest"
-START_PORT = 3001
+CONTAINER_NAME = "transparency-firefox"
+FIXED_PORT = 3001  # Fixed port for Firefox web UI
 
-# Serve index.html at root
 @app.route("/")
-def home():
-    return send_from_directory(app.static_folder, "index.html")
-
-# Serve proxy.html if needed
-@app.route("/proxy")
-def proxy():
-    return send_from_directory(app.static_folder, "proxy.html")
-
-# Open Firefox Docker container
-@app.route("/open-firefox")
-def open_firefox():
-    port = random.randint(START_PORT, START_PORT + 1000)
-    container_name = f"transparency-firefox-{port}"
-
+def index():
+    """
+    Main page. Redirects to the running Firefox container.
+    """
     try:
-        container = client.containers.run(
+        container = client.containers.get(CONTAINER_NAME)
+        if container.status != "running":
+            container.start()
+    except docker.errors.NotFound:
+        # Run the container if it doesn't exist
+        client.containers.run(
             FIREFOX_IMAGE,
-            name=container_name,
-            ports={"5800/tcp": port},
+            name=CONTAINER_NAME,
             detach=True,
+            ports={"5800/tcp": FIXED_PORT},
             shm_size="2g",
-            remove=True
+            restart_policy={"Name": "always"}
         )
-    except docker.errors.APIError as e:
-        return f"Error starting Firefox container: {e.explanation}"
 
-    host = request.host.split(":")[0]
-    return redirect(f"http://{host}:{port}")
-
-# Serve static files (CSS, JS, icons)
-@app.route("/static/<path:path>")
-def serve_static(path):
-    return send_from_directory("static", path)
+    return redirect(f"http://localhost:{FIXED_PORT}")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)
