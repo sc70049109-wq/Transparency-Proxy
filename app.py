@@ -1,25 +1,22 @@
 from flask import Flask, redirect, send_from_directory
-import subprocess
 import docker
 import time
 
-app = Flask(__name__, static_folder='static')
+app = Flask(__name__, static_folder='static', static_url_path='')
 
 FIREFOX_CONTAINER_NAME = "transparency-firefox"
 FIREFOX_IMAGE = "jlesage/firefox:latest"
-FIREFOX_PORT = 3001  # change this if you want another port
+FIREFOX_PORT = 3001  # VNC Web port
 
 client = docker.from_env()
 
 def start_firefox_container():
-    # Check if container already exists
     try:
         container = client.containers.get(FIREFOX_CONTAINER_NAME)
         if container.status != "running":
             container.start()
-            time.sleep(5)  # give container time to start
+            time.sleep(5)
     except docker.errors.NotFound:
-        # Create and start container
         client.containers.run(
             FIREFOX_IMAGE,
             name=FIREFOX_CONTAINER_NAME,
@@ -30,14 +27,15 @@ def start_firefox_container():
         )
         time.sleep(5)
 
+# Serve index.html at root
 @app.route('/')
 def index():
-    return send_from_directory('static', 'index.html')
+    return app.send_static_file('index.html')
 
+# Open Firefox container
 @app.route('/open-firefox')
 def open_firefox():
     start_firefox_container()
-    # Redirect user to the Firefox container VNC web port
     return redirect(f"http://localhost:{FIREFOX_PORT}")
 
 if __name__ == "__main__":
