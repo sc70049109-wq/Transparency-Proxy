@@ -1,17 +1,10 @@
-// Toggle dark/light mode
+// Optional JS for theme toggle or animations
+
 document.addEventListener("DOMContentLoaded", () => {
-  const body = document.body;
-  const toggleBtn = document.createElement("button");
-  toggleBtn.innerText = "☀️/🌙";
-  toggleBtn.classList.add("btn-glass");
-  toggleBtn.style.position = "fixed";
-  toggleBtn.style.top = "1rem";
-  toggleBtn.style.right = "1rem";
-  toggleBtn.style.zIndex = "1000";
-
-  toggleBtn.addEventListener("click", () => {
-    body.classList.toggle("dark-mode");
+  const btn = document.querySelector(".btn-glass");
+  btn.addEventListener("click", (e) => {
+    // Redirect to Flask root route
+    e.preventDefault();
+    window.location.href = "/";
   });
-
-  body.appendChild(toggleBtn);
 });
